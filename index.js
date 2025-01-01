@@ -108,7 +108,7 @@ app.post('/linha', async (req, res) => {
     const { ponto } = req.body;
     console.log(ponto)
     if (!ponto || !(/^[0-9]+$/.test(ponto))) {
-        return res.status(400).send('Informe o ponto correto.');
+        return res.send('Informe o ponto correto.');
     }
 
 
@@ -135,7 +135,7 @@ app.post('/linha', async (req, res) => {
             await Promise.race([navigationPromise, timeoutPromise]);
         } catch (error) {
             await browser.close();
-            return res.status(404).send('❌Ponto não encontrado');
+            return res.send('❌Ponto não encontrado');
         }
 
         await page_2.type('#txtNumeroPonto', ponto);
@@ -150,7 +150,7 @@ app.post('/linha', async (req, res) => {
             await Promise.race([navigationPromise2, timeoutPromise]);
         } catch (error) {
             await browser.close();
-            return res.status(404).send('❌Ponto não encontrado');
+            return res.send('❌Ponto não encontrado');
         }
 
         const divTexts = await page_3.evaluate(() => {
@@ -183,7 +183,7 @@ app.post('/linha', async (req, res) => {
             }
         }
 
-        await browser.close();
+
 
         if (linhas.length === 0) {
             return res.status(404).send('❌Linhas não encontradas');
@@ -192,13 +192,14 @@ app.post('/linha', async (req, res) => {
         const corpo = linhas.map(linha =>
             `🚌Linha: ${linha.Linha}\n🚩Destino: ${linha.Destino}\n⏳Proximo: ${linha.Proximo}\n🔁Segundo: ${linha.Segundo}\n`
         ).join('\n');
-
+        console.log(corpo)
         res.status(200).send(corpo);
-
+        await browser.close();
     } catch (error) {
         console.error('Erro ao processar a requisição:', error);
         res.status(500).send('Erro interno ao processar a requisição');
     }
+
 });
 
 
