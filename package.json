@@ -1,9 +1,8 @@
 {
   "name": "busgynbot_api",
   "version": "1.0.0",
-  "main": "index.js",
   "scripts": {
-    "start": "node --watch index.js"
+
   },
   "author": "",
   "license": "ISC",
@@ -11,8 +10,6 @@
   "dependencies": {
     "chrome-aws-lambda": "^10.1.0",
     "dotenv": "^16.4.7",
-    "express": "^4.21.2",
-    "puppeteer": "^23.11.1",
-    "puppeteer-core": "^10.4.0"
+    "express": "^4.21.2"
   }
 }
